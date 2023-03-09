@@ -1,1 +1,1 @@
-# Hasty
+Hasty is a web-based start-up founded by two veterans whose mission is to make moving as simple as possible for service members and their families. Hasty is an MVP and due to the proprietary nature of the code, I can only provide snippets of my code. This repository contains .NET, React, and SQL code for the Blogs feature.
