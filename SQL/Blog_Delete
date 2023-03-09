@@ -1,0 +1,47 @@
+USE [Hasty]
+GO
+/****** Object:  StoredProcedure [dbo].[Blogs_Delete]    Script Date: 3/9/2023 1:56:27 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: James Harvey
+-- Create date: 1/27/2023
+-- Description: Delete proc for Blogs
+-- Code Reviewer: Doupis
+
+-- MODIFIED BY: James Harvey
+-- MODIFIED DATE:2/1/2023
+-- Code Reviewer: Jennifer Kwon
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[Blogs_Delete]
+			@Id int
+as
+
+/*
+
+		Declare @Id int = 4
+					
+				Select *
+				From dbo.Blogs
+				Where Id = @Id
+				Execute  dbo.Blogs_Delete
+						@Id
+					
+				Select *
+				From dbo.Blogs
+				Where Id = @Id
+
+*/
+
+BEGIN
+
+	UPDATE dbo.Blogs
+
+		SET BlogStatusId = 4
+		Where Id = @Id
+
+END
