@@ -1,0 +1,36 @@
+.primary-color-head {
+  background-color: #5c2563;
+}
+
+.user-register-error-form {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: red;
+}
+
+.user-eye-toggle-password {
+  display: flex;
+  align-items: center;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  float: right;
+  margin-right: 1px;
+  margin-top: -36.5px;
+  position: relative;
+  z-index: 2;
+  background-color: #eef2f6;
+}
+
+.card-height {
+  height: 480px;
+}
+
+.image-height {
+  height: 200px;
+}
