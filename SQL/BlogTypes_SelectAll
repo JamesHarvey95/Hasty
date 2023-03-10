@@ -1,0 +1,36 @@
+USE [Hasty]
+GO
+/****** Object:  StoredProcedure [dbo].[BlogTypes_SelectAll]    Script Date: 3/9/2023 10:01:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: James Harvey
+-- Create date: 1/26/2023
+-- Description: SelectAll proc for BlogTypes
+-- Code Reviewer: Doupis
+
+-- MODIFIED BY: James Harvey
+-- MODIFIED DATE:2/1/2023
+-- Code Reviewer: Jennifer Kwon
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[BlogTypes_SelectAll]
+
+as
+
+/*
+
+	Execute dbo.BlogTypes_SelectAll
+
+*/
+
+BEGIN
+
+	SELECT	[Id]
+			,[Name]
+	FROM	[dbo].[BlogTypes]
+
+END
