@@ -1,0 +1,82 @@
+USE [Hasty]
+GO
+/****** Object:  StoredProcedure [dbo].[Blogs_Search_Pagination]    Script Date: 3/9/2023 9:48:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: James Harvey
+-- Create date: 02/15/2023
+-- Description: Search proc for Blogs
+-- Code Reviewer:
+
+-- MODIFIED BY:
+-- MODIFIED DATE:
+-- Code Reviewer:
+-- Note:
+-- =============================================
+ALTER proc [dbo].[Blogs_Search_Pagination]		@PageIndex int = 0
+												,@PageSize int = 10
+												,@Query nvarchar(100)
+
+AS
+
+/*
+
+	Declare @PageIndex int = 0
+			,@PageSize int = 10
+			,@Query nvarchar(100) = 'Title'
+
+	Execute dbo.Blogs_Search_Pagination
+				@PageIndex
+				,@PageSize
+				,@Query
+
+	select	*
+	from	dbo.Blogs
+
+*/
+
+BEGIN
+
+DECLARE @Offset int = @PageIndex * @PageSize
+
+		Select	b.Id
+				,b.BlogTypeId
+				,b.AuthorId
+				,b.Title
+				,b.Subject
+				,b.Content
+				,b.ImageUrl
+				,b.DatePublish
+				,u.FirstName
+				,u.Mi
+				,u.LastName
+				,u.AvatarUrl
+				,bt.Name
+				,b.BlogStatusId
+				,bs.Status
+				,b.IsPublished
+				,TotalCount = COUNT(1)OVER()
+		FROM	dbo.Blogs as b inner join dbo.Users as u
+					on b.AuthorId = u.Id
+				inner join dbo.BlogTypes as bt
+					on b.BlogTypeId = bt.Id
+				inner join dbo.BlogStatus as bs
+					on b.BlogStatusId = bs.Id
+		WHERE	(b.Title LIKE '%' + @Query + '%' OR
+				b.Subject LIKE '%' + @Query + '%' OR
+				b.Content LIKE '%' + @Query + '%' OR
+				bt.Name LIKE '%' + @Query + '%' OR
+				u.FirstName LIKE '%' + @Query + '%' OR
+				u.LastName LIKE '%' + @Query + '%') AND b.BlogStatusId != 4
+		ORDER BY b.Id
+				 ,u.Id
+				 ,bt.Id
+				 ,bs.Id
+
+		OFFSET @Offset ROWS
+		FETCH NEXT @PageSize ROWS ONLY
+
+END
