@@ -1,0 +1,75 @@
+USE [Hasty]
+GO
+/****** Object:  StoredProcedure [dbo].[Blogs_Select_BlogCategory_Paginated]    Script Date: 3/9/2023 9:49:58 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: James Harvey
+-- Create date: 1/27/2023
+-- Description: Paginated SelectByBlogCategory proc for Blogs
+-- Code Reviewer: Doupis
+
+-- MODIFIED BY: James Harvey
+-- MODIFIED DATE:2/1/2023
+-- Code Reviewer: Jennifer Kwon
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[Blogs_Select_BlogCategory_Paginated]
+				@BlogCategory int
+				,@PageIndex int
+				,@PageSize int
+as
+
+/*
+
+	Declare @BlogCategory int = 4;
+	Declare @PageIndex int = 0
+			,@PageSize int = 10
+
+	Execute dbo.Blogs_Select_BlogCategory_Paginated 
+				@BlogCategory
+				,@PageIndex
+				,@PageSize
+
+	select *
+	from dbo.Blogs
+
+*/
+
+BEGIN
+
+	DECLARE @Offset int = @PageIndex * @PageSize
+
+	SELECT	b.Id
+			,b.BlogTypeId
+			,b.AuthorId
+			,b.Title
+			,b.Subject
+			,b.Content
+			,b.ImageUrl
+			,b.DatePublish
+			,u.FirstName
+			,u.Mi
+			,u.LastName
+			,u.AvatarUrl
+			,bt.Name
+			,b.BlogStatusId
+			,bs.Status
+			,b.IsPublished
+			,TotalCount = COUNT(1)OVER()
+	FROM	dbo.Blogs as b inner join dbo.Users as u
+				on b.AuthorId = u.Id
+			inner join dbo.BlogTypes as bt
+				on b.BlogTypeId = bt.Id
+			inner join dbo.BlogStatus as bs
+				on b.BlogStatusId = bs.Id
+	WHERE	@BlogCategory = b.BlogTypeId AND b.BlogStatusId != 4
+	ORDER BY b.Id
+
+	OFFSET @Offset ROWS
+	FETCH NEXT @PageSize ROWS ONLY
+
+END
