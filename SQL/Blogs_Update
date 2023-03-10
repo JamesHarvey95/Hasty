@@ -1,0 +1,84 @@
+USE [Hasty]
+GO
+/****** Object:  StoredProcedure [dbo].[Blogs_Update]    Script Date: 3/9/2023 9:58:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: James Harvey
+-- Create date: 1/27/2023
+-- Description: Update proc for Blogs
+-- Code Reviewer: Doupis
+
+-- MODIFIED BY: James Harvey
+-- MODIFIED DATE:2/1/2023
+-- Code Reviewer: Jennifer Kwon
+-- Note:
+-- =============================================
+
+ALTER proc [dbo].[Blogs_Update]
+			@BlogTypeId int
+			,@AuthorId int
+			,@Title nvarchar(100)
+			,@Subject nvarchar(50)
+			,@Content nvarchar(4000)
+			,@ImageUrl nvarchar(255)
+			,@DatePublished datetime2
+			,@BlogStatusId int
+			,@IsPublished bit
+			,@Id int
+
+as
+
+/*
+		Declare @Id int = 4
+		Declare @BlogTypeId int = 4
+				,@AuthorId int = 5
+				,@Title nvarchar(100) = 'Easy way to clean your shoes'
+				,@Subject nvarchar(50) = 'Biking'
+				,@Content nvarchar(4000) = 'Wipe them on the door mat before you come inside.'
+				,@ImageUrl nvarchar(255) = 'https://picture.com'
+				,@DatePublished datetime2 = '02/23/2002'
+				,@BlogStatusId int = 4
+				,@IsPublished bit = 1
+
+			Select	*
+			From	dbo.Blogs
+			Where	Id = @Id
+			Execute	dbo.Blogs_Update
+						@BlogTypeId
+						,@AuthorId
+						,@Title
+						,@Subject
+						,@Content
+						,@ImageUrl
+						,@DatePublished
+						,@BlogStatusId
+						,@IsPublished
+						,@Id
+
+			Select	*
+			From	dbo.Blogs
+			Where	Id = @Id
+*/
+
+BEGIN
+
+	Declare @DateNow datetime2 = getutcdate()
+
+	UPDATE dbo.Blogs
+
+			SET	BlogTypeId = @BlogTypeId
+				,AuthorId = @AuthorId
+				,Title = @Title
+				,Subject = @Subject
+				,Content = @Content
+				,ImageUrl = @ImageUrl
+				,DatePublish = @DateNow
+				,DateModified = @DateNow
+				,BlogStatusId = @BlogStatusId
+				,IsPublished = @IsPublished
+			Where Id = @Id
+
+END
